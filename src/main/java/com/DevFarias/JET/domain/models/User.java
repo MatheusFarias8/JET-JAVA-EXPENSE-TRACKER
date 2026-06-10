@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "TB_USERS")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
