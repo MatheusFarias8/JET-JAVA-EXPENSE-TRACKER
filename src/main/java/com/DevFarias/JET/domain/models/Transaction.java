@@ -3,6 +3,8 @@ package com.DevFarias.JET.domain.models;
 import com.DevFarias.JET.domain.enums.TransactionStatus;
 import com.DevFarias.JET.domain.enums.TransactionType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,52 +23,55 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
-    String description;
+    @NotBlank
+    private String description;
 
     @Column(nullable = false)
-    BigDecimal amount;
+    @Positive
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    TransactionType type;
+    private TransactionType type;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    TransactionStatus status;
+    private TransactionStatus status;
 
     @Column(nullable = false)
-    LocalDate transactionDate;
+    private LocalDate transactionDate;
+
+    private LocalDate dueDate;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    LocalDate dueDate;
-
-    LocalDateTime createdAt;
-
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category category;
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
-    Account account;
+    private Account account;
 
     @ManyToOne
     @JoinColumn(name = "credit_card_id")
-    CreditCard creditCard;
+    private CreditCard creditCard;
 
     @ManyToOne
     @JoinColumn(name = "installment_plan_id")
-    InstallmentPlan installmentPlan;
+    private InstallmentPlan installmentPlan;
 
-    Boolean recurring;
+    private Boolean recurring;
 
 }

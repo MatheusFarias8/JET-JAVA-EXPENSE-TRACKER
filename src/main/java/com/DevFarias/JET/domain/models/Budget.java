@@ -1,6 +1,7 @@
 package com.DevFarias.JET.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,23 +18,24 @@ public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
-    int month;
+    private int month;
 
     @Column(nullable = false)
-    int year;
+    private int year;
 
     @Column(nullable = false)
-    BigDecimal limitAmount;
+    @PositiveOrZero
+    private BigDecimal limitAmount;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category category;
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }

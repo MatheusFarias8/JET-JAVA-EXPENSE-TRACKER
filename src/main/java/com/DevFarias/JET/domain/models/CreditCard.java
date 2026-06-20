@@ -1,6 +1,8 @@
 package com.DevFarias.JET.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,27 +20,30 @@ public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
-    String name;
+    @NotBlank
+    private String name;
 
     @Column(nullable = false)
-    BigDecimal creditLimit;
+    @PositiveOrZero
+    private BigDecimal creditLimit;
 
     @Column(nullable = false)
-    Integer closingDay;
+    private Integer closingDay;
 
     @Column(nullable = false)
-    Integer dueDay;
+    private Integer dueDay;
 
     @Column(nullable = false)
-    Boolean active;
+    private Boolean active;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
-    LocalDateTime createdAt;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
 }

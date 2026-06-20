@@ -2,6 +2,8 @@ package com.DevFarias.JET.domain.models;
 
 import com.DevFarias.JET.domain.enums.AccountType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,28 +21,31 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
-    String name;
+    @NotBlank
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    AccountType accountType;
+    private AccountType accountType;
 
     @Column(nullable = false)
-    BigDecimal initialBalance;
+    @PositiveOrZero
+    private BigDecimal initialBalance;
 
     @Column(nullable = false)
-    Boolean active;
+    private Boolean active;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    LocalDateTime createdAt;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    LocalDateTime updatedAt;
-
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
 }
